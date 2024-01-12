@@ -1,0 +1,280 @@
+Programming in R
+================
+Austin Hart
+
+- [Packages](#packages)
+- [Workflow and projects](#workflow-and-projects)
+- [Data I/O](#data-io)
+- [Explore](#explore)
+- [Understanding R objects](#understanding-r-objects)
+- [Pipes](#pipes)
+
+Dive into the world of data analysis projects using R. For those with a
+background in R, use this as an opportunity to get new perspective on
+familiar functions, object structures, and more. For those without the
+background, try to think about the operations below in terms of syntax
+and function rather than as a fixed set of routines to memorize.
+
+Note that I use generic object and element names wherever possible. For
+example, `summary(my_data$var1)` refers to a generic object, `mydata`,
+and a generic column named `var1`.
+
+## Packages
+
+One of the best parts of using R is that its capacities constantly grow
+and evolve through user-written packages (similar to how “apps” add
+functionality to your phone). After you install a package, you can use
+it by attaching it (essentially activating it) for the whole session or
+calling specific operations on the fly using the `::` operator.[^1]
+
+``` r
+# Installation: a one-time deal
+  install.packages('new_package') # downloads from R server and installs
+
+# attaching a library: for a full session
+  library(new_package)
+  
+# accessing on the fly: new_package::whizbang
+  mydf = haven::read_dta('stataData.dta')
+  
+# get help
+  ?package_name
+  ?mystery_function
+```
+
+## Workflow and projects
+
+Data analytic work has a life cycle that goes well beyond how we think
+about class notes or a single problem set. I really like Hadley et al.’s
+depiction of the data science project:
+
+<figure>
+<img src="https://r4ds.hadley.nz/intro#fig-ds-diagram"
+alt="Hadley et al, R for Data Science" />
+<figcaption aria-hidden="true">Hadley et al, R for Data
+Science</figcaption>
+</figure>
+
+You need a dedicated project folder to manage the many inputs and
+outputs that come with this cycle. The project (`.Rproj`) and associated
+folder create a home where you can pull and push formatted data, code,
+and figures. The project folder is also the place for non-data
+documentation and resources. This might include codebooks,
+presentations, or notes. For example, a project folder for a problem set
+in our course might include:
+
+- `PS1.Rproj`: R project file  
+- `PS1 data.csv`: your project data  
+- `PS1 code.R`: raw R code
+- `PS1.rmd`: Markdown document with your final code and answers  
+- `PS1.pdf`: Rendered version of your problem set answers
+
+To that end, I recommend that you create a new project
+(`File -> New Project`) or fork and clone the repository for each class
+session and assignment.
+
+## Data I/O
+
+How do you get that data frame into R? R can input all types of data.
+Simply identify the type of data you have (look at the file extension!)
+and choose the right command. *Take special note to wrap all file names
+in quotes*
+
+``` r
+# Import R object (data, list, etc)
+  load('file.RData')
+  
+# Other inputs (must input as a new object)
+  df1 = read_csv(file = 'file.csv', na = c("",".")) # note the na option
+  df2 = readxl::read_excel(file = 'file.xlsx')
+  df3 = haven::read_dta(file = 'file.dta')
+```
+
+Don’t forget about outputting, or saving, the data too. Write it into
+your preferred format. I recommend saving in `.RData` format for
+yourself and in `.csv` format if you intend to distribute the data for
+public use.[^2]
+
+``` r
+# Output
+  save(df1, 'newdata.RData')
+  write_csv(df1, 'newdata.csv')
+```
+
+## Explore
+
+Get those hands dirty! Check the data structure. Take a peak at the raw
+data. Get a quick summary of each variable in the data.
+
+``` r
+# Structure and head
+  str(mydata)
+  head(mydata)
+  
+# Explore variables
+  summary(mydata)
+```
+
+### Character and factor variables
+
+What to do with non-numeric variables? Start with a relative frequency
+table and bar chart.
+
+``` r
+# Initial Tabulation
+  mytab = 
+    mydata |>
+    count(var_name) |>
+    mutate(percent = 100 * n/sum(n))
+
+# Beautify the table for printing
+  mytab |>
+    knitr::kable(digits = 1) # optional last step
+
+# Graphing
+  mytab |> # uses the table you created, not raw data
+    ggplot(mytab, aes(x = var.name, y = percent)) +
+    geom_col()
+```
+
+### Numeric and integer variables
+
+Get those summary statistics and make another picture. Notice the
+flexibility of `summarise` versus a quicker but inflexible call to
+`summary`.
+
+``` r
+# Summary stats
+  summary(mydata[['var.name']]) # or summary(mydata$var.name)
+  
+  mydata |>
+    summarise( # customize summary stats
+      stat1 = some_function(var1),
+      mean2 = mean(var2),
+      sd2 = sd(var2),
+      meanDiff = mean(var1) - mean(var1),
+    )
+
+# Plot the distribution    
+  mydata |>
+    ggplot(mydata, aes(x = var.name)) +
+    geom_histogram() # compare to geom_boxplot()
+```
+
+## Understanding R objects
+
+R is an Object Oriented Language (OOL), and objects hold primary
+importance in the way we write and execute code. If you want to store
+information/data in memory (rather than just print it out in the
+console), you have to store it in a named object. If you want to call on
+or use stored information, you have to call the object by name. As a
+matter of style: keep names short, intuitive, and free of spaces.[^3]
+
+``` r
+# Compare the outputs:
+  1:5
+  obj1 = 1:5
+  obj1
+```
+
+Objects come in many flavors: vectors, matrices, data frames, lists, and
+more. Object names are case sensitive. We’ll typically work with data
+frames (and a special kind of frame called a `tibble`), but there are
+moments where knowing the difference between a data frame and a vector
+is really important.
+
+``` r
+# Vectors/values:
+  a = 1:10
+  b = rnorm(10)
+  c = letters[1:10]
+  d = a >= 4
+
+# Data frames/tibbles
+  df1 = data.frame(a, b, c, d)
+  df2 = tibble(d, a, b) # requires tidyverse
+
+# Lists
+  l1 = list(item1 = df1, item2 = df2)
+```
+
+Run the code in the blob above and then check the properties of each
+object you created using `is()`. For example, note that `is(l1)` returns
+`"list"` and `"vector"`.
+
+How do you reference or index information stored in an object? For
+example, you want to calculate the mean of `var_1` within `my_data`. R
+is very rectangular in its thinking about objects: they are `n` rows
+long and/or `k` columns wide.[^4] A `tibble` recording grades for
+fifteen students on four problem sets is a 15x4 rectangular object. A
+`list` of 2 `tibbles` and a `vector` is a 3x1 list. If you know this,
+you can access information with reference to it’s location in the
+rectangle.
+
+Notice below the difference between extraction and subsetting. Pay
+special attention to the different use of quotations for variable names
+as well as the type of object each operation creates.
+
+``` r
+# Extract an item from list or frame
+  object$element
+  object[['element']]
+  object |> 
+    pull(item)
+  
+# Subset an element (maintains orig structure)
+  object[row_num, var_num] #defaults to object[var_num]
+  object['var_name'] # use quotes to call by name
+  object[1:30, 4:5] # select rows 1-30, variables 4-5
+  object |>
+    select(var1, var2, var3) |>
+    filter(criterion)
+```
+
+## Pipes
+
+Pipes are awesome and *totally* intuitive… once you understand them. The
+base R pipe, `|>` and `magrittr` pipe, `%>%`, push the output from one
+code segment forward as the first input for another code segment. It
+saves you from creating and tracking loads of intermediate objects.
+Compare:
+
+``` r
+# with pipes
+  p1 =
+    mydata |> # start with my data
+    filter(group == 'A') |>
+    count(var1) |> # tabulate scores on var1
+    mutate(percent = 100 * n / sum(n)) |> # add a percent column
+    ggplot(aes(x = var1, y = percent)) +
+    geom_col()
+
+# Without a pipe
+  d1 = filter(.data = mydata, group == 'A')
+  d2 = count(x = d1, var1)
+  d3 = mutate(.data = d2, percent = 100 * n / sum(n))
+  p1 = ggplot(data = d3, aes(x = var1, y = percent)) + 
+    geom_col()
+    
+  rm(d1,d2,d3)
+```
+
+Notice in comparing these sequences where the “piped” output fits in the
+next code segment. For example, `count(x = mydata, var1)` becomes
+`mydata |> count(x = ., var1)` where `mydata` flows directly into `.`.
+You can simplify to `mydata |> count(var1)`.
+
+[^1]: Attaching is great for packages you want to use repeatedly (e.g.,
+    `tidyverse`). The `::` operator is excellent for something you may
+    only use once (e.g., `haven::read_dta()`).
+
+[^2]: One important caveat is that writing to `.csv` will lose any
+    factor ordering and/or `haven` labeling that you created.
+
+[^3]: Strictly speaking, you can assign any name to an object. However,
+    if it has spaces or other special/illegal characters, you’ll have to
+    wrap it in backquotes, `` ` ``, every time you call it:
+    `` `$hi++y Name` ``.
+
+[^4]: Object rows are identifiable by number. Columns can be identified
+    with reference to name, `var1`, or number.
