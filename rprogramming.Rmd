@@ -41,7 +41,7 @@ One of the best parts of using R is that its capacities constantly grow and evol
 ## Workflow and projects
 Data analytic work has a life cycle that goes well beyond how we think about class notes or a single problem set. I really like Hadley et al.'s depiction of the data science project:
 
-![Hadley et al, R for Data Science](https://r4ds.hadley.nz/intro#fig-ds-diagram)
+![Hadley et al, R for Data Science](https://github.com/sis750/02-programming/blob/main/base.png)
 
 You need a dedicated project folder to manage the many inputs and outputs that come with this cycle. The project (`.Rproj`) and associated folder create a home where you can pull and push formatted data, code, and figures. The project folder is also the place for non-data documentation and resources. This might include codebooks, presentations, or notes. For example, a project folder for a problem set in our course might include:  
 

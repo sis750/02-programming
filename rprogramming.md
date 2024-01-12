@@ -49,7 +49,7 @@ about class notes or a single problem set. I really like Hadley et al.’s
 depiction of the data science project:
 
 <figure>
-<img src="https://r4ds.hadley.nz/intro#fig-ds-diagram"
+<img src="https://github.com/sis750/02-programming/blob/main/base.png"
 alt="Hadley et al, R for Data Science" />
 <figcaption aria-hidden="true">Hadley et al, R for Data
 Science</figcaption>
