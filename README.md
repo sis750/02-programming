@@ -9,8 +9,8 @@ Time to get serious about data analysis projects in R. This week we introduce co
 
 ## Materials
 - `trash_wheels.csv` dataset  
-- [R crash course]<https://sis750.github.io/rprogramming.md> guide   
-- [Guide to markdown]<https://github.com/sis750/markdown.Rmd> and [the rendered output]<https://github.com/sis750/markdown.pdf>
+- [R crash course](https://sis750.github.io/rprogramming.md) guide   
+- [Guide to markdown](https://github.com/sis750/markdown.Rmd) and [the rendered output](https://github.com/sis750/markdown.pdf)
 
 
 ## Assessments
