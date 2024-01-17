@@ -1,5 +1,5 @@
 ---
-title: "Trying R Markdown"
+title: "Literate Programming"
 author: "Austin Hart"
 date: January 12
 output: pdf_document
@@ -11,7 +11,10 @@ output: pdf_document
 # for handling code, plots, etc in your doc.
 
   knitr::opts_chunk$set(
-    echo = FALSE, warning = FALSE, message = FALSE,
+    eval = TRUE,
+    echo = FALSE, 
+    warning = FALSE, 
+    message = FALSE,
     fig.align = 'center'
   )  
 
@@ -21,17 +24,26 @@ output: pdf_document
   df = read_csv('trash_wheels.csv')
 ```
 
-Before we get started: You need to install `rmarkdown` and `tintyex` to make this work.^[Also check out the `setup` code chunk. Include it first, and be sure to specify `include=FALSE`.]    
+Before we get started: You need to install `rmarkdown` and `tintyex` to make this work.^[Also check out the `setup` code chunk. Include it first, and be sure to specify `include=FALSE`.] And beware: the `tinytex` install requires:
+
+```{r, eval=F}
+install.packages('tinytex')
+library(rmarkdown)
+tinytex::install_tinytex()
+```
 
 
 ## Literate programming with R Markdown
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring reports, slide decks, websites, and more. Of special note fur us, Markdown allows you to integrate R code into the body text of your work. The combination of coding and typesetting is often referred to as "literate programming."
+This is an R Markdown document. Markdown is a simple markup language for authoring reports, slide decks, websites, and more. Critically, Markdown allows you to integrate code (`R`, `python`, `html`, etc) into the body text of your work. This combination of coding and typesetting is sometimes called "literate programming."
+
 
 ### Markdown resources  
-There are a number of excellent, stand-alone resources on Markdown. Yihui Xie's [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)  (Xie et al. 2023), for example, covers installation, documents, slide presentations, and much more. 
+There are a number of excellent, stand-alone resources on Markdown. Yihui Xie's [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/), for example, covers installation, documents, slide presentations, and much more. 
 
-<!-- This is a comment in markdown -->
-<!-- shift + command/cntl + c to comment -->
+<!-- This is a comment in markdown.
+Does it do line breaks?
+Yes it does.-->
+<!-- shift + command/ctrl + c to comment -->
 
 ### Workflow  
 When you're ready to start communicating findings through a report or slide presentation, try the following: 

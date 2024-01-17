@@ -60,14 +60,14 @@ outputs that come with this cycle. The project (`.Rproj`) and associated
 folder create a home where you can pull and push formatted data, code,
 and figures. The project folder is also the place for non-data
 documentation and resources. This might include codebooks,
-presentations, or notes. For example, a project folder for a problem set
-in our course might include:
+presentations, or notes. A generic project folder for a problem set in
+our course might include:
 
 - `PS1.Rproj`: R project file  
-- `PS1 data.csv`: your project data  
+- `PS1 data.csv`: the data  
 - `PS1 code.R`: raw R code
-- `PS1.rmd`: Markdown document with your final code and answers  
-- `PS1.pdf`: Rendered version of your problem set answers
+- `Hart PS1.rmd`: Markdown document with your final code and answers  
+- `Hart PS1.pdf`: Rendered version of your problem set answers
 
 To that end, I recommend that you create a new project
 (`File -> New Project`) or fork and clone the repository for each class
@@ -90,10 +90,9 @@ in quotes*
   df3 = haven::read_dta(file = 'file.dta')
 ```
 
-Don’t forget about outputting, or saving, the data too. Write it into
-your preferred format. I recommend saving in `.RData` format for
-yourself and in `.csv` format if you intend to distribute the data for
-public use.[^2]
+Don’t forget about outputting, or saving, the data too. Write it to your
+preferred format. I recommend saving in `.RData` format for yourself and
+`.csv` format if you intend to distribute the data for public use.[^2]
 
 ``` r
 # Output
@@ -125,7 +124,7 @@ table and bar chart.
   mytab = 
     mydata |>
     count(var_name) |>
-    mutate(percent = 100 * n/sum(n))
+    mutate(percent = 100 * n / sum(n))
 
 # Beautify the table for printing
   mytab |>
@@ -145,7 +144,7 @@ flexibility of `summarise` versus a quicker but inflexible call to
 
 ``` r
 # Summary stats
-  summary(mydata[['var.name']]) # or summary(mydata$var.name)
+  summary(mydata['var.name']) # or summary(mydata$var.name)
   
   mydata |>
     summarise( # customize summary stats
@@ -233,11 +232,10 @@ as well as the type of object each operation creates.
 
 ## Pipes
 
-Pipes are awesome and *totally* intuitive… once you understand them. The
-base R pipe, `|>` and `magrittr` pipe, `%>%`, push the output from one
-code segment forward as the first input for another code segment. It
-saves you from creating and tracking loads of intermediate objects.
-Compare:
+Pipes are awesome… once you understand them. The base R pipe, `|>` and
+`magrittr` pipe, `%>%`, push the output from one code segment forward as
+the first input for another code segment. It saves you from creating and
+tracking loads of intermediate objects. Compare:
 
 ``` r
 # with pipes
