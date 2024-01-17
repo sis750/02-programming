@@ -8,9 +8,9 @@ Time to get serious about data analysis projects in R. This week we introduce co
 - Make sure you've configured Git and linked RStudio with your GitHub account. 
 
 ## Materials
-- `trash_wheels.csv` dataset  
-- [R crash course](https://sis750.github.io/rprogramming.md) guide   
-- [Guide to markdown](https://github.com/sis750/markdown.Rmd) and [the rendered output](https://github.com/sis750/markdown.pdf)
+- `trash_wheels.csv` data from Baltimore's trash wheels  
+- [R crash course](https://sis750.github.io/02-programming/rprogramming.md) guide   
+- [Guide to markdown](https://github.com/sis750/02-programming/markdown.Rmd) and [the rendered output](https://github.com/sis750/02-programming/markdown.pdf)
 
 
 ## Assessments
