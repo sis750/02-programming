@@ -6,10 +6,8 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-
 # This "setup" chunk specifies global options
 # for handling code, plots, etc in your doc.
-
   knitr::opts_chunk$set(
     eval = TRUE,
     echo = FALSE, 
@@ -17,19 +15,26 @@ output: pdf_document
     message = FALSE,
     fig.align = 'center'
   )  
+```
 
+
+```{r}
 # This is the appropriate place to load packages,
 # import data, set visual themes, and more
-  library(tidyverse); library(kableExtra)
+  library(tidyverse)
+  library(kableExtra)
+
   df = read_csv('trash_wheels.csv')
 ```
 
 Before we get started: You need to install `rmarkdown` and `tintyex` to make this work.^[Also check out the `setup` code chunk. Include it first, and be sure to specify `include=FALSE`.] And beware: the `tinytex` install requires:
 
 ```{r, eval=F}
-install.packages('tinytex')
-library(rmarkdown)
-tinytex::install_tinytex()
+
+  install.packages('tinytex')
+  library(rmarkdown)
+  tinytex::install_tinytex()
+  
 ```
 
 
