@@ -14,5 +14,5 @@ Time to get serious about data analysis projects in R. This week we introduce co
 
 
 ## Assessments
-- [Problem Set 2](https://github.com/sis750/02-programming/blob/main/ps2.pdf) is due in hard copy on January 31.
+- [Problem Set 2](https://github.com/sis750/02-programming/blob/main/ps2.pdf) is due in hard copy on January 31. [Link to Greenspace data](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/TMWYHB)
 - Extra Credit: it's all around you. All you have to do is look...
